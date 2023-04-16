@@ -2,7 +2,7 @@ import openai
 from ghapi.all import GhApi
 from pydantic import BaseSettings
 import typer
-from typing import Optional
+from typing import Optional, List, Dict, Any, Union
 
 class Settings(BaseSettings):
     TOKEN: str
@@ -23,12 +23,11 @@ ghapi = GhApi(token=settings.TOKEN, owner=settings.OWNER, repo=settings.REPO_NAM
 
 app = typer.Typer()
 
-def get_open_prs():
+def get_open_prs() -> List[Any]:
     return ghapi.pulls.list(state='open')
 
-def analyze_pr(pr):
+def analyze_pr(pr: Any) -> Dict[str, Union[str, float]]:
     pr_description = pr.body
-
 
     # Read all PR files
     pr_files = ghapi.pulls.list_files(pr.number)
@@ -52,8 +51,7 @@ def analyze_pr(pr):
 
     review_cost = response['usage']['total_tokens'] * settings.PRICE_PER_TOKEN
     review = response.choices[0].message['content'].strip()
-    review = f"Review \n\n{review}\n \n\nReview costs \n\n{review_cost} USD" 
-
+    review = f"Review \n\n{review}\n \n\nReview costs \n\n{review_cost} USD"
 
     event = "COMMENT"
 
@@ -67,11 +65,11 @@ def analyze_pr(pr):
         'event': event
     }
 
-def submit_review(pr, review):
+def submit_review(pr: Any, review: Dict[str, Union[str, float]]) -> None:
     ghapi.pulls.create_review(pr.number, body=review['body'], event=review['event'])
 
 @app.command()
-def review_all_open_pr():
+def review_all_open_pr() -> None:
     open_prs = get_open_prs()
     for pr in open_prs:
         review = analyze_pr(pr)
@@ -80,7 +78,7 @@ def review_all_open_pr():
             typer.echo(f"Review submitted for PR #{pr.number}")
 
 @app.command()
-def review_pr(pr_number: Optional[int] = typer.Argument(None)):
+def review_pr(pr_number: Optional[int] = typer.Argument(None)) -> None:
     if pr_number is not None:
         pr = ghapi.pulls.get(pr_number)
         review = analyze_pr(pr)
