@@ -10,34 +10,28 @@ name = "pr-review-bot"
 version = "0.1.0"
 description = "Automated PR review bot using GPT-3.5-turbo"
 authors = [
-    {name = "Your Name", email = "your.email@example.com"}
+    {name = "Kyryl Truskovskyi", email = "truskovskiyk@gmail.com"}
 ]
-license = "MIT"
+license = { file = "LICENSE" }
 readme = "README.md"
-homepage = "https://github.com/yourusername/pr-review-bot"
-repository = "https://github.com/yourusername/pr-review-bot"
-classifiers = [
-    "Development Status :: 3 - Alpha",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
-]
-
-[project.urls]
-Bug Tracker = "https://github.com/yourusername/pr-review-bot/issues"
 
 [project.scripts]
 pr-review-bot = "pr_review_bot:app"
 
-[project.dependencies]
+[tool.setuptools]
+py-modules = []
+
+[tool.poetry]
+homepage = "https://github.com/truskovskiyk/pr-reviewer/"
+repository = "https://github.com/truskovskiyk/pr-reviewer/"
+
+[tool.poetry.dependencies]
 openai = "^0.27.0"
 ghapi = "^0.1.19"
 pydantic = "^1.8.2"
 typer = "^0.4.0"
 
-[project.dev-dependencies]
+[tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
 pytest-cov = "^3.0.0"
 pytest-mock = "^3.6.1"
