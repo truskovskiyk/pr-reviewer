@@ -1,0 +1,34 @@
+[build-system]
+requires = [
+    "setuptools>=42",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pr-review-bot"
+version = "0.2.0"
+description = "Automated PR review bot using GPT-3.5-turbo"
+authors = [
+    {name = "Kyryl Truskovskyi", email = "truskovskiyk@gmail.com"}
+]
+license = { file = "LICENSE" }
+readme = "README.md"
+
+[project.scripts]
+pr-review-bot = "pr_review_bot:app"
+
+[tool.poetry]
+homepage = "https://github.com/truskovskiyk/pr-reviewer/"
+repository = "https://github.com/truskovskiyk/pr-reviewer/"
+
+[tool.poetry.dependencies]
+openai = "^0.27.0"
+ghapi = "^0.1.19"
+pydantic = "^1.8.2"
+typer = "^0.4.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.5"
+pytest-cov = "^3.0.0"
+pytest-mock = "^3.6.1"
