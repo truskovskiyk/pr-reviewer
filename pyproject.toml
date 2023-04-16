@@ -18,9 +18,6 @@ readme = "README.md"
 [project.scripts]
 pr-review-bot = "pr_review_bot:app"
 
-[tool.setuptools]
-py-modules = ["pr_review_bot.py"]
-
 [tool.poetry]
 homepage = "https://github.com/truskovskiyk/pr-reviewer/"
 repository = "https://github.com/truskovskiyk/pr-reviewer/"
