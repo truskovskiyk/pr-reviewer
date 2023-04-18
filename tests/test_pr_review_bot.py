@@ -1,10 +1,9 @@
 from typing import Any, Dict, Union
 import pytest
 from unittest.mock import MagicMock, patch
-from pr_review_bot import analyze_pr, submit_review
+from pr_review_bot import analyze_pr, submit_review, get_patch
 from typer.testing import CliRunner
 from pr_review_bot import app
-
 
 runner = CliRunner()
 
@@ -78,3 +77,20 @@ def test_review_pr(mock_pr: MagicMock) -> None:
                 assert f"Review submitted for PR #{mock_pr.number}" in result.output
 
 
+
+
+def test_get_patch_with_changes():
+    pr_file = MagicMock()
+    pr_file.changes = 5
+    pr_file.patch = "patch_with_changes"
+    
+    result = get_patch(pr_file)
+    assert result == "patch_with_changes"
+
+def test_get_patch_without_changes():
+    pr_file = MagicMock()
+    pr_file.changes = 0
+    pr_file.patch = "patch_without_changes"
+    
+    result = get_patch(pr_file)
+    assert result == "no changes"
