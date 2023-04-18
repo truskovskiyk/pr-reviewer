@@ -62,5 +62,5 @@ pr-review-bot --help
 
 
 ```
-pytest --cov=pr_review_bot test_pr_review_bot.py
+pytest --cov=pr_review_bot ./tests
 ```
